@@ -14,14 +14,10 @@ function derivedActivePlayer(playerTurnsList) {
 
 function App() {
   const [playerTurnsList, setPlayerTurnsList] = useState([]);
-  const [currentPlayer, setCurrentPlayer] = useState("player 1");
+
   const activePlayer = derivedActivePlayer(playerTurnsList);
 
   function handleSelectSquare(rowIndex, colIndex) {
-    setCurrentPlayer((curActivePlayer) =>
-      curActivePlayer === "player 1" ? "player 2" : "player 1"
-    );
-
     setPlayerTurnsList((prevTurn) => {
       const updatedTurns = [
         {
@@ -39,12 +35,12 @@ function App() {
       <div id="game-container">
         <ol id="players" className="highlight-player">
           <Player
-            isActive={currentPlayer === "player 1"}
+            isActive={activePlayer === "X"}
             playerName="Player 1"
             playerSymbol="X"
           ></Player>
           <Player
-            isActive={currentPlayer === "player 2"}
+            isActive={activePlayer === "O"}
             playerName="Player 2"
             playerSymbol="O"
           ></Player>
