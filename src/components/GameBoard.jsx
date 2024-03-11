@@ -4,25 +4,14 @@ const initialGameBoard = [
   [null, null, null],
 ];
 
-import React, { useState } from "react";
+export default function GameBoard({ onSelectedSquare, playerTurns}) {
+  let boardData = initialGameBoard;
 
-export default function GameBoard({ activePlayer, onSelectedSquare }) {
-  const [boardData, setBoardData] = useState(initialGameBoard);
+  for (const turn of playerTurns) {
+    const { square, playerTurn } = turn;
+    const { row, col } = square;
 
-  function handleSquareClick(rowIndex, colIndex) {
-    setBoardData((previousBoardData) => {
-      const updatedBoardData = [
-        ...previousBoardData.map((innerArray) => [...innerArray]),
-      ];
-      if (activePlayer === "player 1") {
-        updatedBoardData[rowIndex][colIndex] = "X";
-      } else {
-        updatedBoardData[rowIndex][colIndex] = "O";
-      }
-      return updatedBoardData;
-    });
-
-    onSelectedSquare();
+    boardData[row][col] = playerTurn;
   }
 
   return (
@@ -34,7 +23,7 @@ export default function GameBoard({ activePlayer, onSelectedSquare }) {
               <li key={colIndex}>
                 <button
                   value={boardData}
-                  onClick={() => handleSquareClick(rowIndex, colIndex)}
+                  onClick={() => onSelectedSquare(rowIndex, colIndex)}
                 >
                   {symbol}
                 </button>
