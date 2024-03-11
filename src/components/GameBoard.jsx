@@ -1,18 +1,21 @@
-const initialGameBoard = [
-  [null, null, null],
-  [null, null, null],
-  [null, null, null],
-];
+function deriveGameBoard(playerTurns) {
+  const boardData = [
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+  ];
 
-export default function GameBoard({ onSelectedSquare, playerTurns}) {
-  let boardData = initialGameBoard;
-
-  for (const turn of playerTurns) {
+  playerTurns.forEach((turn) => {
     const { square, playerTurn } = turn;
     const { row, col } = square;
-
     boardData[row][col] = playerTurn;
-  }
+  });
+
+  return boardData;
+}
+
+export default function GameBoard({ onSelectedSquare, playerTurns }) {
+  const boardData = deriveGameBoard(playerTurns);
 
   return (
     <ol id="game-board">
@@ -24,6 +27,7 @@ export default function GameBoard({ onSelectedSquare, playerTurns}) {
                 <button
                   value={boardData}
                   onClick={() => onSelectedSquare(rowIndex, colIndex)}
+                  disabled={symbol !== null}
                 >
                   {symbol}
                 </button>

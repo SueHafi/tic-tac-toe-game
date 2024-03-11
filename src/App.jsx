@@ -3,6 +3,7 @@ import { useState } from "react";
 import Player from "./components/Player.jsx";
 import GameBoard from "./components/GameBoard.jsx";
 import Log from "./components/Log.jsx";
+import { win_combinations } from "./win_combinations.jsx";
 
 function derivedActivePlayer(playerTurnsList) {
   let activePlayer = "X";
@@ -18,13 +19,13 @@ function App() {
   const activePlayer = derivedActivePlayer(playerTurnsList);
 
   function handleSelectSquare(rowIndex, colIndex) {
-    setPlayerTurnsList((prevTurn) => {
+    setPlayerTurnsList((prevTurns) => {
       const updatedTurns = [
         {
           square: { row: rowIndex, col: colIndex },
           playerTurn: activePlayer,
         },
-        ...prevTurn,
+        ...prevTurns,
       ];
       return updatedTurns;
     });
@@ -38,19 +39,19 @@ function App() {
             isActive={activePlayer === "X"}
             playerName="Player 1"
             playerSymbol="X"
-          ></Player>
+          />
           <Player
             isActive={activePlayer === "O"}
             playerName="Player 2"
             playerSymbol="O"
-          ></Player>
+          />
         </ol>
         <GameBoard
           onSelectedSquare={handleSelectSquare}
           playerTurns={playerTurnsList}
-        ></GameBoard>
+        />
       </div>
-      <Log turns={playerTurnsList}></Log>
+      <Log turns={playerTurnsList} />
     </main>
   );
 }
