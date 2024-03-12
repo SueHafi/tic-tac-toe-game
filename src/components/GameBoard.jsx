@@ -1,21 +1,5 @@
-function deriveGameBoard(playerTurns) {
-  const boardData = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ];
-
-  playerTurns.forEach((turn) => {
-    const { square, playerTurn } = turn;
-    const { row, col } = square;
-    boardData[row][col] = playerTurn;
-  });
-
-  return boardData;
-}
-
-export default function GameBoard({ onSelectedSquare, playerTurns }) {
-  const boardData = deriveGameBoard(playerTurns);
+export default function GameBoard({ onSelectedSquare, renderGameBoard }) {
+  const boardData = renderGameBoard();
 
   return (
     <ol id="game-board">

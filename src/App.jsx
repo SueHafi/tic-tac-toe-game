@@ -13,10 +13,31 @@ function derivedActivePlayer(playerTurnsList) {
   return activePlayer;
 }
 
+function deriveGameBoard(playerTurns) {
+  const boardData = [
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+  ];
+
+  playerTurns.forEach((turn) => {
+    const { square, playerTurn } = turn;
+    const { row, col } = square;
+    boardData[row][col] = playerTurn;
+  });
+
+  return boardData;
+}
 function App() {
   const [playerTurnsList, setPlayerTurnsList] = useState([]);
 
   const activePlayer = derivedActivePlayer(playerTurnsList);
+
+  // for(const combination of win_combinations) {
+  //   const startingSquareSymbol 
+  //   const secondSquareSymbol 
+  //   const thirdSquareSymbol 
+  // }
 
   function handleSelectSquare(rowIndex, colIndex) {
     setPlayerTurnsList((prevTurns) => {
@@ -48,7 +69,7 @@ function App() {
         </ol>
         <GameBoard
           onSelectedSquare={handleSelectSquare}
-          playerTurns={playerTurnsList}
+          renderGameBoard={()=>deriveGameBoard(playerTurnsList)}
         />
       </div>
       <Log turns={playerTurnsList} />
